@@ -10,7 +10,7 @@ import { User } from './users/user.entity';
       host: 'localhost',
       port: 3306,
       username: 'root',
-      password: 'Raju@2004',
+      password: '********',
       database: 'reactbasic',
       synchronize: false,
       entities: [User],
