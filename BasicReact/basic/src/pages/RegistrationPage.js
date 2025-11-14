@@ -58,24 +58,43 @@ function RegistrationPage() {
       <h1 className="page-title">USER REGISTRATION</h1>
 
       <form className="form-grid" onSubmit={handleSubmit}>
-        <div className="form-group">
+
+        {/* Floating Input - First Name */}
+        <div className="floating-container">
+          <input
+            type="text"
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+            required
+          />
           <label>First Name</label>
-          <input value={firstName} onChange={(e) => setFirstName(e.target.value)} required />
         </div>
 
-        <div className="form-group">
+        {/* Floating Input - Last Name */}
+        <div className="floating-container">
+          <input
+            type="text"
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+            required
+          />
           <label>Last Name</label>
-          <input value={lastName} onChange={(e) => setLastName(e.target.value)} required />
         </div>
 
-        <div className="form-group">
+        {/* Floating Input - Age */}
+        <div className="floating-container">
+          <input
+            type="number"
+            value={age}
+            onChange={(e) => setAge(e.target.value)}
+            required
+          />
           <label>Age</label>
-          <input type="number" value={age} onChange={(e) => setAge(e.target.value)} required />
         </div>
 
-        <div className="form-group">
-          <label>Mobile Number</label>
-          <div className="mobile-flex">
+        {/* Floating Input - Mobile */}
+        <div className="mobile-flex floating-mobile">
+          <div className="country-select">
             <select
               value={countryCode}
               onChange={(e) => setCountryCode(e.target.value)}
@@ -87,18 +106,20 @@ function RegistrationPage() {
               <option value="JP">🇯🇵 +81</option>
               <option value="DE">🇩🇪 +49</option>
             </select>
+          </div>
 
+          <div className="floating-container phone-box">
             <input
               type="tel"
-              placeholder="Enter number"
               value={mobileNumber}
               onChange={(e) => handleNumberChange(e.target.value)}
               required
             />
+            <label>Mobile Number</label>
           </div>
         </div>
 
-        <button className="submit-btn">Submit</button>
+        <button className="btn-modern">Submit</button>
       </form>
 
       <button className="nav-btn" onClick={() => navigate("/users")}>

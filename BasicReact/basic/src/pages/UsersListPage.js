@@ -33,43 +33,50 @@ function UsersListPage() {
     <div className="full-page">
       <h1 className="page-title">USERS LIST</h1>
 
+      {/* Glass Wrapper for Better Visibility */}
       <div className="table-container widened">
-        <table>
-          <thead>
-            <tr>
-              <th>S.No</th>
-              <th>First Name</th>
-              <th>Last Name</th>
-              <th>Age</th>
-              <th>Mobile Number</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
+        <div className="table-glass">
 
-          <tbody>
-            {users.length > 0 ? (
-              users.map((u, i) => (
-                <tr key={u.id}>
-                  <td>{i + 1}</td>
-                  <td>{u.firstName}</td>
-                  <td>{u.lastName}</td>
-                  <td>{u.age}</td>
-                  <td>{u.mobileNumber}</td>
-                  <td>
-                    <button className="delete-btn" onClick={() => handleDelete(u.id)}>
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))
-            ) : (
-              <tr><td colSpan="6">No records found</td></tr>
-            )}
-          </tbody>
-        </table>
+          <table>
+            <thead>
+              <tr>
+                <th>S.No</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Age</th>
+                <th>Mobile Number</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {users.length > 0 ? (
+                users.map((u, i) => (
+                  <tr key={u.id}>
+                    <td>{i + 1}</td>
+                    <td>{u.firstName}</td>
+                    <td>{u.lastName}</td>
+                    <td>{u.age}</td>
+                    <td>{u.mobileNumber}</td>
+                    <td>
+                      <button className="delete-btn" onClick={() => handleDelete(u.id)}>
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr><td colSpan="6">No records found</td></tr>
+              )}
+            </tbody>
+          </table>
+
+        </div>
       </div>
 
-      <button className="nav-btn" onClick={() => navigate("/")}>← Back to Registration</button>
+      <button className="nav-btn" onClick={() => navigate("/")}>
+        ← Back to Registration
+      </button>
     </div>
   );
 }
