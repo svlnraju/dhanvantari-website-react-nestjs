@@ -6,7 +6,6 @@ function UsersListPage() {
   const [users, setUsers] = useState([]);
   const navigate = useNavigate();
 
-  // Fetch all users from backend
   const fetchUsers = async () => {
     try {
       const response = await fetch("http://localhost:5000/list");
@@ -21,24 +20,20 @@ function UsersListPage() {
     fetchUsers();
   }, []);
 
-  // Delete user
   const handleDelete = async (id) => {
     try {
-      const response = await fetch(`http://localhost:5000/delete/${id}`, {
-        method: "DELETE",
-      });
-      const data = await response.json();
-      console.log(data.message);
-      fetchUsers(); // Refresh list
+      await fetch(`http://localhost:5000/delete/${id}`, { method: "DELETE" });
+      fetchUsers();
     } catch (error) {
       console.error("Error deleting user:", error);
     }
   };
 
   return (
-    <div className="container users-page">
-      <h2>Users List</h2>
-      <div className="table-container">
+    <div className="full-page">
+      <h1 className="page-title">USERS LIST</h1>
+
+      <div className="table-container widened">
         <table>
           <thead>
             <tr>
@@ -50,32 +45,31 @@ function UsersListPage() {
               <th>Actions</th>
             </tr>
           </thead>
+
           <tbody>
             {users.length > 0 ? (
-              users.map((user, index) => (
-                <tr key={user.id}>
-                  <td>{index + 1}</td>
-                  <td>{user.firstName}</td>
-                  <td>{user.lastName}</td>
-                  <td>{user.age}</td>
-                  <td>{user.mobileNumber}</td>
+              users.map((u, i) => (
+                <tr key={u.id}>
+                  <td>{i + 1}</td>
+                  <td>{u.firstName}</td>
+                  <td>{u.lastName}</td>
+                  <td>{u.age}</td>
+                  <td>{u.mobileNumber}</td>
                   <td>
-                    <button onClick={() => handleDelete(user.id)}>Delete</button>
+                    <button className="delete-btn" onClick={() => handleDelete(u.id)}>
+                      Delete
+                    </button>
                   </td>
                 </tr>
               ))
             ) : (
-              <tr>
-                <td colSpan="6">No records found</td>
-              </tr>
+              <tr><td colSpan="6">No records found</td></tr>
             )}
           </tbody>
         </table>
       </div>
 
-      <button className="nav-btn" onClick={() => navigate("/")}>
-        ← Back to Registration
-      </button>
+      <button className="nav-btn" onClick={() => navigate("/")}>← Back to Registration</button>
     </div>
   );
 }

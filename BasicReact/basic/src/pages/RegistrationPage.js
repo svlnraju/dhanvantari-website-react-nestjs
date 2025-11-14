@@ -1,146 +1,107 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { AsYouType } from "libphonenumber-js";
 import "../App.css";
 
 function RegistrationPage() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [age, setAge] = useState("");
-  const [countryCode, setCountryCode] = useState("+91"); // Default: India 🇮🇳
+  const [countryCode, setCountryCode] = useState("IN");
   const [mobileNumber, setMobileNumber] = useState("");
+  const [cleanNumber, setCleanNumber] = useState("");
   const navigate = useNavigate();
+
+  const handleNumberChange = (value) => {
+    const formatted = new AsYouType(countryCode).input(value);
+    const cleanDigits = value.replace(/\D/g, "").slice(-10);
+
+    setMobileNumber(formatted);
+    setCleanNumber(cleanDigits);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // ✅ Clean and validate mobile number
-    const cleanedNumber = mobileNumber.replace(/\D/g, "");
-    if (cleanedNumber.length !== 10) {
+    if (cleanNumber.length !== 10) {
       alert("Please enter a valid 10-digit mobile number.");
       return;
     }
 
     try {
-      const response = await fetch("http://localhost:5000/add", {
+      await fetch("http://localhost:5000/add", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           firstName,
           lastName,
           age: Number(age),
-          mobileNumber: cleanedNumber, // only 10 digits stored
+          mobileNumber: cleanNumber,
         }),
       });
 
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error("Server error:", errorText);
-        alert("Error saving user. Please check backend logs.");
-        return;
-      }
-
-      const data = await response.json();
-      console.log(data.message);
-
-      // Reset form
       setFirstName("");
       setLastName("");
       setAge("");
       setMobileNumber("");
-      setCountryCode("+91");
+      setCleanNumber("");
+      setCountryCode("IN");
 
-      // Navigate to Users List
       navigate("/users");
     } catch (error) {
       console.error("Error adding user:", error);
-      alert("Failed to connect to server.");
     }
   };
 
   return (
-    <div className="container registration-page">
-      <h2>User Registration</h2>
-      <form onSubmit={handleSubmit}>
+    <div className="full-page">
+      <h1 className="page-title">USER REGISTRATION</h1>
+
+      <form className="form-grid" onSubmit={handleSubmit}>
         <div className="form-group">
-          <label>First Name:</label>
-          <input
-            type="text"
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
-            required
-          />
+          <label>First Name</label>
+          <input value={firstName} onChange={(e) => setFirstName(e.target.value)} required />
         </div>
 
         <div className="form-group">
-          <label>Last Name:</label>
-          <input
-            type="text"
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
-            required
-          />
+          <label>Last Name</label>
+          <input value={lastName} onChange={(e) => setLastName(e.target.value)} required />
         </div>
 
         <div className="form-group">
-          <label>Age:</label>
-          <input
-            type="number"
-            value={age}
-            onChange={(e) => setAge(e.target.value)}
-            required
-          />
+          <label>Age</label>
+          <input type="number" value={age} onChange={(e) => setAge(e.target.value)} required />
         </div>
 
-        {/* 📱 Country Code + Mobile Number */}
         <div className="form-group">
-          <label>Mobile Number:</label>
-          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          <label>Mobile Number</label>
+          <div className="mobile-flex">
             <select
               value={countryCode}
               onChange={(e) => setCountryCode(e.target.value)}
-              style={{
-                padding: "8px",
-                borderRadius: "8px",
-                border: "1px solid #ccc",
-                fontSize: "15px",
-              }}
-              required
             >
-              <option value="+91">🇮🇳 +91 (India)</option>
-              <option value="+1">🇺🇸 +1 (USA)</option>
-              <option value="+44">🇬🇧 +44 (UK)</option>
-              <option value="+61">🇦🇺 +61 (Australia)</option>
-              <option value="+81">🇯🇵 +81 (Japan)</option>
-              <option value="+49">🇩🇪 +49 (Germany)</option>
+              <option value="IN">🇮🇳 +91</option>
+              <option value="US">🇺🇸 +1</option>
+              <option value="GB">🇬🇧 +44</option>
+              <option value="AU">🇦🇺 +61</option>
+              <option value="JP">🇯🇵 +81</option>
+              <option value="DE">🇩🇪 +49</option>
             </select>
 
             <input
-              type="text"
-              placeholder="Enter 10-digit number"
+              type="tel"
+              placeholder="Enter number"
               value={mobileNumber}
-              onChange={(e) => {
-                const value = e.target.value.replace(/\D/g, "").slice(-10); // only numbers, last 10 digits
-                setMobileNumber(value);
-              }}
+              onChange={(e) => handleNumberChange(e.target.value)}
               required
-              style={{
-                flex: 1,
-                padding: "8px",
-                borderRadius: "8px",
-                border: "1px solid #ccc",
-                fontSize: "15px",
-              }}
             />
           </div>
         </div>
 
-        <button type="submit">Submit</button>
+        <button className="submit-btn">Submit</button>
       </form>
 
-      <button
-        className="nav-btn"
-        onClick={() => navigate("/users")}
-      >
+      <button className="nav-btn" onClick={() => navigate("/users")}>
         Go to Users List →
       </button>
     </div>

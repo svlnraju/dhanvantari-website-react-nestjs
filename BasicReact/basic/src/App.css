@@ -1,223 +1,129 @@
-/* ===== Global Layout ===== */
+/* ---------- FULL PAGE LAYOUT ---------- */
 body {
+  margin: 0;
+  padding: 0;
   font-family: "Poppins", sans-serif;
   background-image: url("C:/React Project/BasicReact/background.jpg");
   background-size: cover;
   background-position: center;
-  background-repeat: no-repeat;
   background-attachment: fixed;
-  margin: 0;
-  padding: 0;
-  color: #fff;
 }
 
-/* Dark overlay for contrast */
-body::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.6);
-  z-index: -1;
-}
-
-/* ===== Container ===== */
-.container {
+.full-page {
   width: 100%;
   min-height: 100vh;
-  padding: 60px 8%;
+  padding: 40px;
   box-sizing: border-box;
+
+  /* Glass UI */
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(15px) saturate(160%);
+  -webkit-backdrop-filter: blur(15px) saturate(160%);
+  border-radius: 12px;
+
   text-align: center;
 }
 
-/* Page Headings */
-h2, h3 {
+/* ---------- TITLES ---------- */
+.page-title {
+  font-size: 32px;
+  font-weight: 700;
   color: #fff;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-}
-
-h2 {
-  font-size: 30px;
   margin-bottom: 40px;
 }
 
-h3 {
-  font-size: 24px;
-  margin-bottom: 25px;
-}
-
-/* ===== NAVIGATION BUTTONS ===== */
-.nav-btn {
-  background-color: #6c63ff;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  padding: 10px 18px;
-  margin-top: 25px;
-  cursor: pointer;
-  transition: 0.3s;
-  font-weight: 500;
-}
-
-.nav-btn:hover {
-  background-color: #5848e5;
-  transform: scale(1.05);
-}
-
-/* ===== REGISTRATION PAGE ===== */
-.registration-page form {
-  width: 100%;
-  max-width: 1000px;
-  margin: 0 auto 40px auto;
+/* ---------- FORM GRID ---------- */
+.form-grid {
+  max-width: 900px;
+  margin: auto;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
-  align-items: end;
-  padding: 25px 30px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 15px;
-  backdrop-filter: blur(8px);
+  grid-template-columns: repeat(2, 1fr);
+  gap: 25px;
 }
 
-.registration-page label {
-  display: block;
-  font-weight: 600;
-  margin-bottom: 6px;
-  color: #fff;
+.form-group {
   text-align: left;
-  font-size: 15px;
 }
 
-.registration-page input {
+label {
+  color: white;
+  font-weight: 600;
+}
+
+input, select {
   width: 100%;
-  padding: 10px 12px;
+  padding: 10px;
   border-radius: 8px;
-  border: 1px solid #ccc;
-  outline: none;
-  background-color: rgba(255, 255, 255, 0.9);
-  color: #333;
+  border: none;
+  margin-top: 5px;
   font-size: 15px;
-  box-sizing: border-box;
-  transition: 0.3s;
 }
 
-.registration-page input:focus {
-  border-color: #6c63ff;
-  box-shadow: 0 0 6px rgba(108, 99, 255, 0.6);
+/* Phone input layout */
+.mobile-flex {
+  display: flex;
+  gap: 10px;
 }
 
-/* Submit Button */
-.registration-page button[type="submit"] {
-  grid-column: span 4;
-  justify-self: center;
-  width: 160px;
-  background-color: #6c63ff;
+/* ---------- BUTTONS ---------- */
+.submit-btn {
+  grid-column: span 2;
+  margin: 20px auto;
+  width: 180px;
+  background: #6c63ff;
   color: white;
   border: none;
+  padding: 12px;
   border-radius: 8px;
-  padding: 10px 20px;
   cursor: pointer;
-  transition: 0.3s;
-  font-weight: 500;
 }
 
-.registration-page button[type="submit"]:hover {
-  background-color: #5848e5;
-  transform: scale(1.05);
+.nav-btn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background: transparent;
+  border: 2px solid #6c63ff;
+  color: #fff;
+  border-radius: 8px;
+  cursor: pointer;
 }
 
-/* ===== USERS LIST PAGE ===== */
-.users-page {
-  text-align: center;
-}
-
+/* ---------- TABLE ---------- */
 .table-container {
-  width: 95%;
-  margin: 20px auto 60px auto;
+  width: 100%;
+  margin-top: 40px;
   overflow-x: auto;
-  background: rgba(255, 255, 255, 0.08);
-  border-radius: 12px;
-  backdrop-filter: blur(6px);
-  padding: 20px;
+}
+
+.widened {
+  max-width: 1100px;
+  margin: auto;
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
-  text-align: center;
-  font-size: 15px;
   color: #fff;
 }
 
-thead {
-  background-color: rgba(108, 99, 255, 0.95);
-  font-weight: bold;
+th {
+  background: rgba(108, 99, 255, 0.9);
+  padding: 12px;
 }
 
-th, td {
-  padding: 12px 15px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-tbody tr:nth-child(even) {
-  background-color: rgba(255, 255, 255, 0.1);
-}
-
-tbody tr:nth-child(odd) {
-  background-color: rgba(255, 255, 255, 0.05);
+td {
+  padding: 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
 }
 
 tbody tr:hover {
-  background-color: rgba(255, 255, 255, 0.25);
-  transition: 0.3s;
+  background: rgba(255,255,255,0.15);
 }
 
-/* Buttons inside table */
-td button {
-  background-color: #6c63ff;
+.delete-btn {
+  background: #ff5c5c;
   border: none;
-  color: white;
-  border-radius: 6px;
   padding: 6px 12px;
-  margin: 2px;
-  cursor: pointer;
-  font-size: 13px;
-  transition: 0.2s;
-}
-
-td button:hover {
-  background-color: #5848e5;
-}
-
-/* ===== Responsive ===== */
-@media (max-width: 992px) {
-  .registration-page form {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .registration-page button[type="submit"] {
-    grid-column: span 2;
-  }
-}
-
-@media (max-width: 600px) {
-  .registration-page form {
-    grid-template-columns: 1fr;
-  }
-
-  .registration-page button[type="submit"] {
-    grid-column: span 1;
-    width: 100%;
-  }
-
-  table {
-    font-size: 13px;
-  }
-
-  .nav-btn {
-    width: 100%;
-  }
+  color: #fff;
+  border-radius: 6px;
 }
