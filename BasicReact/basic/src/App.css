@@ -5,14 +5,12 @@ body {
   margin: 0;
   padding: 0;
   font-family: "Poppins", sans-serif;
-
   background-image: url("C:/React Project/BasicReact/ayurved.jpg");
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
 }
 
-/* Soft dim blur overlay */
 body::before {
   content: "";
   position: fixed;
@@ -23,179 +21,376 @@ body::before {
 }
 
 /* ----------------------------------------------------
-   MAIN PAGE GLASS CONTAINER
+   PAGE WRAPPER
 ---------------------------------------------------- */
 .full-page {
   width: 100%;
   min-height: 100vh;
   padding: 55px 20px;
-
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(18px) saturate(180%);
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(px);
   border-radius: 20px;
-  box-shadow: 0 0 35px rgba(0, 0, 0, 0.35);
-
-  animation: fadeIn 0.8s ease-in-out;
+  box-shadow: 0 0 35px rgba(0, 0, 0, 0.3);
+  animation: fadeIn 0.7s ease-in-out;
   text-align: center;
 }
 
-/* Fade animation */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(25px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* ----------------------------------------------------
-   TITLES
----------------------------------------------------- */
 .page-title {
-  font-size: 38px;
+  font-family: "Montserrat", sans-serif;
   font-weight: 700;
-  color: #ffffff;
-  letter-spacing: 2px;
-  text-shadow: 0 4px 18px rgba(0, 0, 0, 0.7);
-  margin-bottom: 50px;
+  text-transform: uppercase;
+  background: linear-gradient(90deg, #7a6cff, #5b3bff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
+
 /* ----------------------------------------------------
-   FORM STYLING
+   FORM GRID
 ---------------------------------------------------- */
 .form-grid {
-  max-width: 850px;
-  margin: auto;
+  max-width: 800px;
+  margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 32px;
+  gap: 40px 50px;
 }
 
-
-/* ---------- FLOATING INPUT BASE ---------- */
+/* ----------------------------------------------------
+   FLOATING CONTAINER (INPUT + TEXTAREA)
+---------------------------------------------------- */
 .floating-container {
   position: relative;
   width: 100%;
-  max-width: 330px;
-  margin: auto;
 }
 
-.floating-container input {
+.floating-container input,
+.floating-container textarea {
   width: 100%;
-  padding: 14px 16px;
+  padding: 16px 18px;
+  font-size: 16px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.6);
+  background: rgba(255,255,255,0.85);
+  transition: 0.25s;
+  resize: none;
+}
+
+/* FLOATING LABEL BASE */
+.floating-container label {
+  position: absolute;
+  top: 14px;
+  left: 18px;
   font-size: 15px;
-  color: #000;
-  background: rgba(255, 255, 255, 0.75);
-  border: 1px solid rgba(255,255,255,0.5);
-  border-radius: 12px;
+  color: #333;
+  opacity: 0.7;
+  pointer-events: none;
   transition: 0.25s;
 }
 
-.floating-container input:focus {
-  background: #fff;
-  border-color: #8570ff;
-  box-shadow: 0 0 10px rgba(133, 112, 255, 0.6);
-  transform: scale(1.02);
-}
-
-.floating-container label {
-  position: absolute;
-  left: 17px;
-  top: 15px;
-  font-size: 15px;
-  color: #333;
-  pointer-events: none;
-  transition: 0.25s ease;
-  opacity: 0.7;
-}
-
-/* Floating effect */
+/* FLOATING BEHAVIOR FIX — input + textarea */
 .floating-container input:focus + label,
-.floating-container input:not(:placeholder-shown) + label {
+.floating-container input:not(:placeholder-shown) + label,
+.floating-container textarea:focus + label,
+.floating-container textarea:not(:placeholder-shown) + label {
   top: -8px;
-  left: 10px;
+  left: 12px;
   font-size: 12px;
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(255,255,255,0.9);
   padding: 0 6px;
   border-radius: 4px;
-  opacity: 1;
 }
 
 /* ----------------------------------------------------
-   MOBILE NUMBER BOXES
+   MOBILE NUMBER FIELD
 ---------------------------------------------------- */
 .mobile-flex {
   display: flex;
-  gap: 14px;
+  gap: 15px;
   align-items: center;
-  justify-content: center;
 }
 
-/* Country dropdown */
-.country-select select {
-  padding: 14px;
-  background: rgba(255,255,255,0.75);
-  border: 1px solid rgba(255,255,255,0.5);
-  border-radius: 12px;
-  font-size: 14px;
-  transition: 0.2s;
+.country-select {
+  padding: 15px 12px;
+  font-size: 15px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.6);
+  background: rgba(255,255,255,0.85);
+  cursor: pointer;
 }
-
-.country-select select:focus {
-  border-color: #7d63ff;
-  box-shadow: 0 0 10px rgba(125, 99, 255, 0.6);
-}
-
-/* Phone field floating adjusted */
-.phone-box { max-width: 330px; }
 
 /* ----------------------------------------------------
-   BUTTONS
+   PROBLEM BOX FULL WIDTH
+---------------------------------------------------- */
+.problem-box {
+  grid-column: span 2;
+}
+
+.full-width textarea {
+  min-height: 160px;
+}
+
+/* ----------------------------------------------------
+   SUBMIT BUTTON
 ---------------------------------------------------- */
 .btn-modern {
-  grid-column: span 2;
-  margin: 30px auto 18px;
-  width: 220px;
-
-  background: linear-gradient(135deg, #8b7bff, #624dff);
-  color: white;
+  width: 260px;
   padding: 14px;
-  font-size: 16px;
+  font-size: 17px;
+  font-weight: 600;
+  grid-column: span 2;
+  margin: 10px auto;
+  border-radius: 14px;
   border: none;
-  border-radius: 12px;
   cursor: pointer;
-
-  box-shadow: 0 5px 18px rgba(80, 70, 255, 0.4);
-  transition: 0.3s ease-in-out;
-}
-
-.btn-modern:hover {
-  background: linear-gradient(135deg, #9c8dff, #6c57ff);
-  transform: translateY(-4px);
-  box-shadow: 0 10px 26px rgba(80, 70, 255, 0.55);
-}
-
-/* Navigation Button */
-.nav-btn {
-  margin-top: 10px;
-  padding: 11px 25px;
-  background: rgba(255,255,255,0.15);
-  border: 2px solid #9d91ff;
-  color: #fff;
-  border-radius: 10px;
-  cursor: pointer;
+  color: white;
+  background: linear-gradient(135deg, #7a6cff, #5b3bff);
   transition: 0.25s;
 }
 
+.btn-modern:hover {
+  transform: translateY(-3px);
+  background: linear-gradient(135deg, #9387ff, #6a4aff);
+}
+
+/* NAV BUTTON UNDER FORM */
+.nav-btn {
+  margin-top: 15px;
+  padding: 10px 24px;
+  color: #fff;
+  border: 2px solid #9d91ff;
+  border-radius: 12px;
+  cursor: pointer;
+  background: rgba(255,255,255,0.2);
+}
+
 .nav-btn:hover {
-  background: rgba(255,255,255,0.25);
+  background: rgba(255,255,255,0.35);
   transform: scale(1.05);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.35);
 }
 
 /* ----------------------------------------------------
-   TABLE DESIGN
+   USERS LIST — TABLE STYLING
 ---------------------------------------------------- */
-.table-container { margin-top: 40px; }
 
-.widened { max-width: 1100px; margin: auto; }
+.table-container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+table {
+  width: 100%;
+  color: white;
+  border-collapse: collapse;
+}
+
+thead th {
+  background: #7367f0;
+  padding: 14px;
+  font-weight: 600;
+  text-align: center;
+}
+
+tbody td {
+  padding: 14px;
+  text-align: center;
+  border-bottom: 1px solid rgba(255,255,255,0.25);
+}
+
+tbody tr:hover {
+  background: rgba(255,255,255,0.15);
+}
+
+.no-data {
+  text-align: center;
+  padding: 20px;
+}
+
+/* ----------------------------------------------------
+   VIEW / DELETE BUTTONS
+---------------------------------------------------- */
+
+.view-btn {
+  background: #40c6ff;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+.view-btn:hover {
+  background: #1da9e4;
+}
+
+.delete-btn {
+  background: #ff5d5d;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+.delete-btn:hover {
+  background: #f93a3a;
+}
+
+/* ----------------------------------------------------
+   PAGINATION
+---------------------------------------------------- */
+
+.pagination {
+  margin-top: 25px;
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  color: white;
+  font-weight: 600;
+}
+
+/* ----------------------------------------------------
+   BACK BUTTON
+---------------------------------------------------- */
+
+.back-btn {
+  padding: 12px 30px;
+  margin-top: 20px;
+  background: rgba(255,255,255,0.85);
+  border-radius: 12px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.back-btn:hover {
+  background: white;
+  transform: scale(1.05);
+}
+
+/* 📱 MOBILE UI FIX for Registration Page */
+@media (max-width: 600px) {
+
+  /* Page padding smaller */
+  .full-page {
+    padding: 35px 14px;
+  }
+
+  /* Title bigger */
+  .page-title {
+    font-size: 30px;
+    line-height: 36px;
+  }
+
+  /* Form becomes vertical */
+  .form-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    width: 100%;
+    max-width: 95%;
+    margin: 0 auto;
+  }
+
+  /* Inputs look bigger */
+  .floating-container input,
+  .floating-container textarea {
+    height: 30px;
+    font-size: 16px;
+    border-radius: 12px;
+    padding: 14px;
+  }
+
+  textarea {
+    min-height: 150px;
+  }
+
+  /* Mobile number row: dropdown + input */
+  .mobile-flex {
+    flex-direction: row;
+    gap: 10px;
+  }
+
+  .country-select {
+    width: 70px;
+    height: 50px;
+    font-size: 15px;
+    text-align: center;
+  }
+
+  .phone-box {
+    flex: 1;
+  }
+
+  /* Buttons full width */
+  .btn-modern,
+  .nav-btn {
+    width: 100%;
+    height: 50px;
+    font-size: 18px;
+    border-radius: 12px;
+  }
+
+  /* Problem box fills screen */
+  .problem-box {
+    grid-column: span 1;
+  }
+}
+
+
+/* =========================================
+   USERS LIST PAGE STYLES
+========================================= */
+
+/* Top row: Export (left) + Sort (right) */
+.users-top {
+  max-width: 1100px;
+  margin: 0 auto 20px auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Export button */
+.export-btn {
+  padding: 8px 16px;
+  background: #8256ff;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.export-btn:hover {
+  background: #6e47f2;
+}
+
+/* Sort container on the right */
+.users-sort {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: white;
+  font-size: 15px;
+}
+
+.sort-select {
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+/* Table container */
+.table-container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
 
 table {
   width: 100%;
@@ -203,51 +398,144 @@ table {
   color: white;
 }
 
-th {
-  background: rgba(115, 103, 255, 0.9);
-  padding: 14px;
-  font-size: 15px;
+thead th {
+  background: #7367f0;
+  padding: 12px;
 }
 
 td {
-  padding: 14px;
-  border-bottom: 1px solid rgba(255,255,255,0.15);
+  padding: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
 }
 
 tbody tr:hover {
-  background: rgba(255,255,255,0.15);
-  transform: scale(1.01);
-  transition: 0.25s;
+  background: rgba(255, 255, 255, 0.15);
 }
 
-/* Delete Button */
-.delete-btn {
-  background: #ff5f5f;
-  border: none;
-  padding: 8px 12px;
+.no-data {
+  text-align: center;
+  padding: 20px;
+  opacity: 0.7;
+}
+
+/* View / Delete buttons */
+.view-btn {
+  background: #40c6ff;
+  padding: 6px 12px;
   border-radius: 8px;
-  color: white;
+  border: none;
+  color: #fff;
   cursor: pointer;
-  transition: 0.25s;
+}
+.view-btn:hover {
+  background: #1da9e4;
 }
 
+.delete-btn {
+  background: #ff5d5d;
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+}
 .delete-btn:hover {
-  background: #ff3d3d;
-  transform: scale(1.1);
+  background: #f53d3d;
 }
 
-/* ----------------------------------------------------
-   RESPONSIVE 
----------------------------------------------------- */
-@media (max-width: 850px) {
-  .form-grid {
-    grid-template-columns: 1fr;
-  }
+/* Pagination */
+.pagination {
+  margin-top: 20px;
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-weight: 600;
+}
 
-  .mobile-flex {
+/* Back button under table */
+.back-btn {
+  margin-top: 25px;
+  padding: 10px 26px;
+  border-radius: 10px;
+  border: none;
+  background: rgba(255, 255, 255, 0.9);
+  cursor: pointer;
+  font-weight: 600;
+}
+.back-btn:hover {
+  background: white;
+  transform: scale(1.03);
+}
+
+/* Modal overlay */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Modal card */
+.modal-box {
+  background: white;
+  padding: 24px;
+  width: 360px;
+  max-width: 90%;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.modal-box h2 {
+  margin-top: 0;
+  margin-bottom: 12px;
+  font-size: 22px;
+}
+
+.modal-box p {
+  margin-bottom: 20px;
+  font-size: 18px;
+}
+
+/* Modal close button */
+.modal-close {
+  padding: 8px 14px;
+  background: #ff5d5d;
+  border-radius: 8px;
+  border: none;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+.modal-close:hover {
+  background: #f53d3d;
+}
+
+/* Mobile adjustments */
+@media (max-width: 600px) {
+  .users-top {
     flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
   }
 
-  .floating-container { max-width: 100%; }
-  .country-select select { width: 100%; }
+  .users-sort {
+    justify-content: center;
+  }
+
+  .export-btn {
+    width: fit-content;
+    margin: 0 auto;
+  }
+
+  .table-container {
+    overflow-x: auto;
+  }
+
+  table {
+    min-width: 750px;
+  }
 }
