@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
-@Entity({ name: 'persons' })
+@Entity('persons')
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
@@ -16,4 +16,8 @@ export class User {
 
   @Column()
   mobileNumber: string;
+
+  @Column({ type: "text", nullable: false })
+  problem: string;
+
 }

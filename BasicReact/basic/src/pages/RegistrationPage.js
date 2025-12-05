@@ -143,7 +143,7 @@ function RegistrationPage() {
       </form>
 
       <button className="nav-btn" onClick={() => navigate("/users")}>
-        Go to Users List →
+        Go to Patients List →
       </button>
     </div>
   );

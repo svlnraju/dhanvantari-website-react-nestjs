@@ -3,34 +3,29 @@ import axios from "axios";
 import "../App.css";
 import { useNavigate } from "react-router-dom";
 
-export default function UsersListPage() {
+const API = "http://localhost:3001/api/users";
+
+function UsersListPage() {
   const [users, setUsers] = useState([]);
-  const [sort, setSort] = useState("newest");
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
-  const [modalUser, setModalUser] = useState(null);
+  const [sort, setSort] = useState("newest");
+
+  // Modal
+  const [showModal, setShowModal] = useState(false);
+  const [selectedProblem, setSelectedProblem] = useState(null);
 
   const navigate = useNavigate();
-  const pageSize = 10;
 
-  // ⚠️ IMPORTANT:
-  // If you do NOT use global prefix "/api" in main.ts:
-  // Use: "http://localhost:3001/users"
-  //const API = "http://192.168.1.6:3001/api/users"; USE THIS TO CHECK ANDROID COMPATIBILITY
-  const API = "http://localhost:3001/api/users";
-
-
-  // ------------------ FETCH USERS ------------------
   const fetchUsers = async () => {
     try {
-      const res = await axios.get(`${API}/list`, {
-        params: { page, sort },
-      });
-
-      setUsers(res.data.items);
-      setTotal(res.data.total);
+      const res = await fetch(`${API}/list?page=${page}&sort=${sort}`);
+      const data = await res.json();
+      setUsers(data.items || []);
+      setTotal(data.total || 0);
     } catch (err) {
-      console.error("Error fetching users:", err);
+      console.error(err);
+      setUsers([]);
     }
   };
 
@@ -38,157 +33,159 @@ export default function UsersListPage() {
     fetchUsers();
   }, [page, sort]);
 
-  // ------------------ DELETE USER ------------------
+  const totalPages = Math.ceil(total / 10);
+
+  // Export
+  const handleExportPage = () =>
+    window.open(`${API}/export/page?page=${page}&sort=${sort}`, "_blank");
+
+  const handleExportAll = () =>
+    window.open(`${API}/export/all?sort=${sort}`, "_blank");
+
+  // Delete
   const deleteUser = async (id) => {
-    if (!window.confirm("Delete this patient?")) return;
-
-    try {
-      await axios.delete(`${API}/delete/${id}`);
-      fetchUsers();
-    } catch (err) {
-      console.error("Delete failed:", err);
-    }
+    if (!window.confirm("Delete patient?")) return;
+    await fetch(`${API}/delete/${id}`, { method: "DELETE" });
+    fetchUsers();
   };
 
-  // ------------------ EXPORT EXCEL ------------------
-  const exportExcel = async () => {
-    try {
-      const res = await axios.get(`${API}/export/excel`, {
-        responseType: "blob",
-      });
-      const link = window.URL.createObjectURL(new Blob([res.data]));
-
-      const a = document.createElement("a");
-      a.href = link;
-      a.download = "patients.xlsx";
-      a.click();
-    } catch (err) {
-      console.error("Export failed:", err);
-    }
+  // Modal open
+  const viewProblem = (text) => {
+    setSelectedProblem(text);
+    setShowModal(true);
   };
-
-  // Pagination calculation
-  const totalPages = Math.ceil(total / pageSize);
 
   return (
     <div className="full-page">
-      <h1 className="page-title">PATIENTS LIST</h1>
+      <h1 className="page-title">PATIENT LIST</h1>
 
-      {/* --------- TOP BAR --------- */}
       <div className="users-top">
-        <button className="export-btn" onClick={exportExcel}>
-          📥 Export
-        </button>
+        {/* Export Buttons */}
+        <div style={{ display: "flex", gap: "10px" }}>
+          <button className="export-btn" onClick={handleExportPage}>
+            Export Current Page
+          </button>
+          <button className="export-btn" onClick={handleExportAll}>
+            Export All
+          </button>
+        </div>
 
+        {/* Sorting */}
         <div className="users-sort">
-          <span>Sort By:</span>
+          <span>Sort:</span>
           <select
             className="sort-select"
             value={sort}
             onChange={(e) => {
+              setPage(1);
               setSort(e.target.value);
-              setPage(1); // Reset to page 1 when sorting changes
             }}
           >
-            <option value="newest">Newest First</option>
-            <option value="oldest">Oldest First</option>
-
+            <option value="newest">Newest → Oldest</option>
+            <option value="oldest">Oldest → Newest</option>
             <option value="fname_asc">First Name A → Z</option>
             <option value="fname_desc">First Name Z → A</option>
-
             <option value="lname_asc">Last Name A → Z</option>
             <option value="lname_desc">Last Name Z → A</option>
-
-            <option value="age_asc">Age ↑</option>
-            <option value="age_desc">Age ↓</option>
+            <option value="age_asc">Age Low → High</option>
+            <option value="age_desc">Age High → Low</option>
           </select>
         </div>
       </div>
 
-      {/* --------- TABLE --------- */}
+      {/* TABLE */}
       <div className="table-container">
-        <table className="users-table">
+        <table>
           <thead>
             <tr>
-              <th>S.No</th>
-              <th>First Name</th>
-              <th>Last Name</th>
+              <th>S No.</th>
+              <th>First</th>
+              <th>Last</th>
               <th>Age</th>
               <th>Mobile</th>
-              <th>Patient Problem</th>
-              <th>Delete</th>
+              <th>Problem</th>
+              <th>Actions</th>
             </tr>
           </thead>
 
           <tbody>
-            {users.length === 0 && (
-              <tr className="no-users-row">
-                <td colSpan="7">No patients found.</td>
+            {users.length === 0 ? (
+              <tr>
+                <td colSpan="7" className="no-data">
+                  No Patients Found
+                </td>
               </tr>
+            ) : (
+              users.map((u, i) => (
+                <tr key={u.id}>
+                  {/* S NO CALCULATION */}
+                  <td>{(page - 1) * 10 + i + 1}</td>
+
+                  <td>{u.firstName}</td>
+                  <td>{u.lastName}</td>
+                  <td>{u.age}</td>
+                  <td>{u.mobileNumber}</td>
+
+                  {/* Hidden Problem */}
+                  <td>
+                    <button
+                      className="view-btn"
+                      onClick={() =>
+                        viewProblem(u.problem || "No problem provided")
+                      }
+                    >
+                      👁 View
+                    </button>
+                  </td>
+
+                  {/* Actions */}
+                  <td>
+                    <button
+                      className="update-btn"
+                      onClick={() => navigate(`/update/${u.id}`)}
+                    >
+                      Update
+                    </button>
+                    <button
+                      className="delete-btn"
+                      style={{ marginLeft: "8px" }}
+                      onClick={() => deleteUser(u.id)}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))
             )}
-
-            {users.map((user, i) => (
-              <tr key={user.id}>
-                <td>{(page - 1) * pageSize + i + 1}</td>
-                <td>{user.firstName}</td>
-                <td>{user.lastName}</td>
-                <td>{user.age}</td>
-                <td>{user.mobileNumber}</td>
-
-                <td>
-                  <button className="btn-view" onClick={() => setModalUser(user)}>
-                    👁 View
-                  </button>
-                </td>
-
-                <td>
-                  <button
-                    className="btn-delete"
-                    onClick={() => deleteUser(user.id)}
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
           </tbody>
         </table>
       </div>
 
-      {/* --------- PAGINATION --------- */}
-      {total > pageSize && (
-        <div className="pagination">
-          <button disabled={page === 1} onClick={() => setPage(page - 1)}>
-            ⬅ Prev
-          </button>
+      {/* Pagination */}
+      <div className="pagination">
+        <button disabled={page <= 1} onClick={() => setPage(page - 1)}>
+          Prev
+        </button>
+        <span>
+          {page} / {totalPages}
+        </span>
+        <button disabled={page >= totalPages} onClick={() => setPage(page + 1)}>
+          Next
+        </button>
+      </div>
 
-          <span>
-            Page {page} / {totalPages}
-          </span>
-
-          <button disabled={page === totalPages} onClick={() => setPage(page + 1)}>
-            Next ➡
-          </button>
-        </div>
-      )}
-
-      {/* --------- BACK BUTTON --------- */}
       <button className="back-btn" onClick={() => navigate("/")}>
         ← Back to Registration
       </button>
 
-      {/* --------- MODAL --------- */}
-      {modalUser && (
-        <div className="modal-overlay" onClick={() => setModalUser(null)}>
+      {/* MODAL */}
+      {showModal && (
+        <div className="modal-overlay" onClick={() => setShowModal(false)}>
           <div className="modal-box" onClick={(e) => e.stopPropagation()}>
             <h2>Patient Problem</h2>
-            <p>{modalUser.problem}</p>
-
-            <button
-              className="modal-close"
-              onClick={() => setModalUser(null)}
-            >
-              Close ✖
+            <p>{selectedProblem}</p>
+            <button className="modal-close" onClick={() => setShowModal(false)}>
+              Close
             </button>
           </div>
         </div>
@@ -196,3 +193,5 @@ export default function UsersListPage() {
     </div>
   );
 }
+
+export default UsersListPage;

@@ -28,7 +28,7 @@ body::before {
   min-height: 100vh;
   padding: 55px 20px;
   background: rgba(255,255,255,0.05);
-  backdrop-filter: blur(px);
+  backdrop-filter: blur(4px);
   border-radius: 20px;
   box-shadow: 0 0 35px rgba(0, 0, 0, 0.3);
   animation: fadeIn 0.7s ease-in-out;
@@ -49,7 +49,6 @@ body::before {
   -webkit-text-fill-color: transparent;
 }
 
-
 /* ----------------------------------------------------
    FORM GRID
 ---------------------------------------------------- */
@@ -62,7 +61,7 @@ body::before {
 }
 
 /* ----------------------------------------------------
-   FLOATING CONTAINER (INPUT + TEXTAREA)
+   FLOATING INPUT / TEXTAREA
 ---------------------------------------------------- */
 .floating-container {
   position: relative;
@@ -81,7 +80,6 @@ body::before {
   resize: none;
 }
 
-/* FLOATING LABEL BASE */
 .floating-container label {
   position: absolute;
   top: 14px;
@@ -93,7 +91,6 @@ body::before {
   transition: 0.25s;
 }
 
-/* FLOATING BEHAVIOR FIX — input + textarea */
 .floating-container input:focus + label,
 .floating-container input:not(:placeholder-shown) + label,
 .floating-container textarea:focus + label,
@@ -107,7 +104,7 @@ body::before {
 }
 
 /* ----------------------------------------------------
-   MOBILE NUMBER FIELD
+   MOBILE FIELD
 ---------------------------------------------------- */
 .mobile-flex {
   display: flex;
@@ -124,13 +121,10 @@ body::before {
   cursor: pointer;
 }
 
-/* ----------------------------------------------------
-   PROBLEM BOX FULL WIDTH
----------------------------------------------------- */
+/* PROBLEM BOX FULL WIDTH */
 .problem-box {
   grid-column: span 2;
 }
-
 .full-width textarea {
   min-height: 160px;
 }
@@ -152,13 +146,12 @@ body::before {
   background: linear-gradient(135deg, #7a6cff, #5b3bff);
   transition: 0.25s;
 }
-
 .btn-modern:hover {
   transform: translateY(-3px);
   background: linear-gradient(135deg, #9387ff, #6a4aff);
 }
 
-/* NAV BUTTON UNDER FORM */
+/* NAV BUTTON */
 .nav-btn {
   margin-top: 15px;
   padding: 10px 24px;
@@ -168,16 +161,14 @@ body::before {
   cursor: pointer;
   background: rgba(255,255,255,0.2);
 }
-
 .nav-btn:hover {
   background: rgba(255,255,255,0.35);
   transform: scale(1.05);
 }
 
 /* ----------------------------------------------------
-   USERS LIST — TABLE STYLING
+   USERS TABLE
 ---------------------------------------------------- */
-
 .table-container {
   max-width: 1100px;
   margin: 0 auto;
@@ -212,9 +203,8 @@ tbody tr:hover {
 }
 
 /* ----------------------------------------------------
-   VIEW / DELETE BUTTONS
+   ACTION BUTTONS
 ---------------------------------------------------- */
-
 .view-btn {
   background: #40c6ff;
   color: #fff;
@@ -225,6 +215,18 @@ tbody tr:hover {
 }
 .view-btn:hover {
   background: #1da9e4;
+}
+
+.update-btn {
+  background: #3fcf6b;
+  padding: 8px 12px;
+  color: white;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+.update-btn:hover {
+  background: #26b354;
 }
 
 .delete-btn {
@@ -240,112 +242,8 @@ tbody tr:hover {
 }
 
 /* ----------------------------------------------------
-   PAGINATION
+   TOP BAR: Export + Sort
 ---------------------------------------------------- */
-
-.pagination {
-  margin-top: 25px;
-  display: flex;
-  gap: 15px;
-  justify-content: center;
-  color: white;
-  font-weight: 600;
-}
-
-/* ----------------------------------------------------
-   BACK BUTTON
----------------------------------------------------- */
-
-.back-btn {
-  padding: 12px 30px;
-  margin-top: 20px;
-  background: rgba(255,255,255,0.85);
-  border-radius: 12px;
-  border: none;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.back-btn:hover {
-  background: white;
-  transform: scale(1.05);
-}
-
-/* 📱 MOBILE UI FIX for Registration Page */
-@media (max-width: 600px) {
-
-  /* Page padding smaller */
-  .full-page {
-    padding: 35px 14px;
-  }
-
-  /* Title bigger */
-  .page-title {
-    font-size: 30px;
-    line-height: 36px;
-  }
-
-  /* Form becomes vertical */
-  .form-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-    width: 100%;
-    max-width: 95%;
-    margin: 0 auto;
-  }
-
-  /* Inputs look bigger */
-  .floating-container input,
-  .floating-container textarea {
-    height: 30px;
-    font-size: 16px;
-    border-radius: 12px;
-    padding: 14px;
-  }
-
-  textarea {
-    min-height: 150px;
-  }
-
-  /* Mobile number row: dropdown + input */
-  .mobile-flex {
-    flex-direction: row;
-    gap: 10px;
-  }
-
-  .country-select {
-    width: 70px;
-    height: 50px;
-    font-size: 15px;
-    text-align: center;
-  }
-
-  .phone-box {
-    flex: 1;
-  }
-
-  /* Buttons full width */
-  .btn-modern,
-  .nav-btn {
-    width: 100%;
-    height: 50px;
-    font-size: 18px;
-    border-radius: 12px;
-  }
-
-  /* Problem box fills screen */
-  .problem-box {
-    grid-column: span 1;
-  }
-}
-
-
-/* =========================================
-   USERS LIST PAGE STYLES
-========================================= */
-
-/* Top row: Export (left) + Sort (right) */
 .users-top {
   max-width: 1100px;
   margin: 0 auto 20px auto;
@@ -354,7 +252,6 @@ tbody tr:hover {
   align-items: center;
 }
 
-/* Export button */
 .export-btn {
   padding: 8px 16px;
   background: #8256ff;
@@ -369,13 +266,11 @@ tbody tr:hover {
   background: #6e47f2;
 }
 
-/* Sort container on the right */
 .users-sort {
   display: flex;
   align-items: center;
   gap: 8px;
   color: white;
-  font-size: 15px;
 }
 
 .sort-select {
@@ -386,149 +281,121 @@ tbody tr:hover {
   cursor: pointer;
 }
 
-/* Table container */
-.table-container {
-  max-width: 1100px;
-  margin: 0 auto;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  color: white;
-}
-
-thead th {
-  background: #7367f0;
-  padding: 12px;
-}
-
-td {
-  padding: 12px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
-}
-
-tbody tr:hover {
-  background: rgba(255, 255, 255, 0.15);
-}
-
-.no-data {
-  text-align: center;
-  padding: 20px;
-  opacity: 0.7;
-}
-
-/* View / Delete buttons */
-.view-btn {
-  background: #40c6ff;
-  padding: 6px 12px;
-  border-radius: 8px;
-  border: none;
-  color: #fff;
-  cursor: pointer;
-}
-.view-btn:hover {
-  background: #1da9e4;
-}
-
-.delete-btn {
-  background: #ff5d5d;
-  padding: 6px 12px;
-  border-radius: 8px;
-  border: none;
-  color: #fff;
-  cursor: pointer;
-}
-.delete-btn:hover {
-  background: #f53d3d;
-}
-
-/* Pagination */
+/* ----------------------------------------------------
+   PAGINATION
+---------------------------------------------------- */
 .pagination {
-  margin-top: 20px;
+  margin-top: 25px;
   display: flex;
   gap: 15px;
   justify-content: center;
-  align-items: center;
   color: white;
   font-weight: 600;
 }
 
-/* Back button under table */
+/* BACK BUTTON */
 .back-btn {
-  margin-top: 25px;
-  padding: 10px 26px;
-  border-radius: 10px;
+  padding: 12px 30px;
+  margin-top: 20px;
+  background: rgba(255,255,255,0.85);
+  border-radius: 12px;
   border: none;
-  background: rgba(255, 255, 255, 0.9);
-  cursor: pointer;
   font-weight: 600;
+  cursor: pointer;
 }
 .back-btn:hover {
   background: white;
-  transform: scale(1.03);
+  transform: scale(1.05);
 }
 
-/* Modal overlay */
+/* ----------------------------------------------------
+   ⭐⭐ MODERN PATIENT PROBLEM MODAL ⭐⭐
+---------------------------------------------------- */
+
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.65);
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(4px);
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 5000;
 }
 
-/* Modal card */
+/* Card container */
 .modal-box {
-  background: white;
-  padding: 24px;
-  width: 360px;
-  max-width: 90%;
-  border-radius: 12px;
+  width: 430px;
+  max-width: 92%;
+  padding: 30px 26px;
+  border-radius: 14px;
+  background: linear-gradient(
+    180deg,
+    rgba(255,255,255,0.98) 0%,
+    rgba(245,245,245,0.96) 100%
+  );
+  
   text-align: center;
+  color: #222;
+  box-shadow: 0px 22px 60px rgba(0,0,0,0.35);
+  animation: modalPop .33s ease-out;
 }
 
+/* Heading */
 .modal-box h2 {
-  margin-top: 0;
-  margin-bottom: 12px;
-  font-size: 22px;
+  margin: 0 0 14px 0;
+  font-size: 24px;
+  font-weight: 700;
+  color: #333;
 }
 
+/* Problem text */
 .modal-box p {
-  margin-bottom: 20px;
-  font-size: 18px;
+  font-size: 17px;
+  line-height: 1.55;
+  color: #444;
+  margin: 8px 0 26px 0;
+  padding: 6px 4px;
 }
 
-/* Modal close button */
+/* Close Button */
 .modal-close {
-  padding: 8px 14px;
-  background: #ff5d5d;
-  border-radius: 8px;
+  padding: 10px 24px;
+  font-size: 16px;
   border: none;
-  color: white;
+  border-radius: 10px;
   font-weight: 600;
+  background: #ff4d4f;
+  color: white;
   cursor: pointer;
-}
-.modal-close:hover {
-  background: #f53d3d;
+  transition: 0.25s;
 }
 
-/* Mobile adjustments */
+.modal-close:hover {
+  background: #d9363e;
+  transform: translateY(-2px);
+}
+
+/* Pop animation */
+@keyframes modalPop {
+  0% {
+    opacity: 0;
+    transform: translateY(25px) scale(0.85);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0px) scale(1);
+  }
+}
+
+
+/* ----------------------------------------------------
+ MOBILE
+---------------------------------------------------- */
 @media (max-width: 600px) {
   .users-top {
     flex-direction: column;
-    align-items: stretch;
     gap: 10px;
-  }
-
-  .users-sort {
-    justify-content: center;
-  }
-
-  .export-btn {
-    width: fit-content;
-    margin: 0 auto;
   }
 
   .table-container {
@@ -536,6 +403,6 @@ tbody tr:hover {
   }
 
   table {
-    min-width: 750px;
+    min-width: 800px;
   }
 }
